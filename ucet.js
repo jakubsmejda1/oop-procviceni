@@ -46,10 +46,23 @@ class BankovniUcet{
         return `${vypis}zůstatek: ${this.#zustatek}`;
     }
 };
+class SporiciUcet extends BankovniUcet {
+    //datové složky
+    #urokovaSazba;
+    //constructor
+    constructor(majitel, pocatecniVklad, urokovaSazba) {
+        super(majitel, pocatecniVklad);
+        this.#urokovaSazba = urokovaSazba;
+    }
+    //metody
+    
+}
+
 
 // Vytvoření účtů
 var ucet1 = new BankovniUcet("Jan Vopěnka", 100);
 var ucet2 = new BankovniUcet("Martina Vopěnková", 100);
+const ucetS1 = new SporiciUcet("Petr Spořitel", 500, 4.01);
 
 // Operace s účty
 try {
@@ -63,3 +76,4 @@ console.log(ucet1.zjistiZustatek());
 console.log(ucet2.zjistiZustatek());
 console.log(ucet1.historie());
 console.log(ucet2.historie());
+console.log(ucetS1.historie())
