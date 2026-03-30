@@ -58,7 +58,6 @@ try {
 } catch (error) {
     console.log(error.message); //v TS je to (error as Error).message
 }
-
 // Výpis zůstatků
 console.log(ucet1.zjistiZustatek());
 console.log(ucet2.zjistiZustatek());
