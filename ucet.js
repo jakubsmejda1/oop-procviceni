@@ -3,13 +3,13 @@ class BankovniUcet{
     #cisloUctu;
     #majitel;
     #zustatek;
-    #historiePohybu;
+    _historiePohybu;
 
     //constructor
     constructor(majitel, pocatecniVklad) {
         this.#cisloUctu = Math.floor(Math.random() * 10000000000) + "/3230";
         this.#majitel = majitel;
-        this.#historiePohybu = ["Počáteční vklad " + pocatecniVklad];
+        this._historiePohybu = ["Počáteční vklad " + pocatecniVklad];
         if (pocatecniVklad < 0) {
             throw new Error("Nesmí být záporný vklad!");
         } else {
@@ -26,7 +26,7 @@ class BankovniUcet{
             throw new Error(`${this.#majitel}: Částka musí být kladná!`);
         }
         this.#zustatek += castka;
-        this.#historiePohybu.push("Vklad " + castka);
+        this._historiePohybu.push("Vklad " + castka);
     }
     vyber(castka) {
         if (castka <= 0) {
@@ -35,13 +35,13 @@ class BankovniUcet{
             throw new Error(`${this.#majitel}: Nepovolené přečerpání!`);
         }
         this.#zustatek -= castka;
-        this.#historiePohybu.push("Výběr " + castka);
+        this._historiePohybu.push("Výběr " + castka);
     }
     historie() {
         //return this.#historiePohybu.join(", ");
         let vypis = `${this.#majitel} (${this.#cisloUctu}) - historie pohybů:\n`;
-        for (let i = 0; i < this.#historiePohybu.length; i++) {
-            vypis += this.#historiePohybu[i] + "\n";
+        for (let i = 0; i < this._historiePohybu.length; i++) {
+            vypis += this._historiePohybu[i] + "\n";
         }
         return `${vypis}zůstatek: ${this.#zustatek}`;
     }
@@ -55,7 +55,12 @@ class SporiciUcet extends BankovniUcet {
         this.#urokovaSazba = urokovaSazba;
     }
     //metody
-    
+    pripisUrok() {
+        const urok = this.zjistiZustatek() * this.#urokovaSazba / 100;
+        this.vklad(urok);
+        this._historiePohybu.pop();
+        this._historiePohybu.push(`Připsaný úrok: ${urok}`);
+    }
 }
 
 
@@ -77,3 +82,5 @@ console.log(ucet2.zjistiZustatek());
 console.log(ucet1.historie());
 console.log(ucet2.historie());
 console.log(ucetS1.historie())
+console.log(ucetS1.pripisUrok())
+console.log(ucetS1.zjistiZustatek())
