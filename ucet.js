@@ -1,55 +1,55 @@
 class BankovniUcet{
     //datové složky
-    cisloUctu;
-    majitel;
-    zustatek;
-    historiePohybu;
+    #cisloUctu;
+    #majitel;
+    #zustatek;
+    #historiePohybu;
 
     //constructor
-    constructor(majitel, cisloUctu, pocatecniVklad) {
-        this.cisloUctu = cisloUctu;
-        this.majitel = majitel;
-        this.historiePohybu = ["Počáteční vklad " + pocatecniVklad];
+    constructor(majitel, pocatecniVklad) {
+        this.#cisloUctu = Math.floor(Math.random() * 10000000000) + "/3230";
+        this.#majitel = majitel;
+        this.#historiePohybu = ["Počáteční vklad " + pocatecniVklad];
         if (pocatecniVklad < 0) {
             throw new Error("Nesmí být záporný vklad!");
         } else {
-            this.zustatek = pocatecniVklad;
+            this.#zustatek = pocatecniVklad;
         }
     }
     
     //metody
     zjistiZustatek() {
-        return this.zustatek;
+        return this.#zustatek;
     }
     vklad(castka) {
         if (castka <= 0) {
-            throw new Error(`${this.majitel}: Částka musí být kladná!`);
+            throw new Error(`${this.#majitel}: Částka musí být kladná!`);
         }
-        this.zustatek += castka;
-        this.historiePohybu.push("Vklad " + castka);
+        this.#zustatek += castka;
+        this.#historiePohybu.push("Vklad " + castka);
     }
     vyber(castka) {
         if (castka <= 0) {
-            throw new Error(`${this.majitel}: Částka musí být kladná!`);
-        } else if (castka > this.zustatek) {
-            throw new Error(`${this.majitel}: Nepovolené přečerpání!`);
+            throw new Error(`${this.#majitel}: Částka musí být kladná!`);
+        } else if (castka > this.#zustatek) {
+            throw new Error(`${this.#majitel}: Nepovolené přečerpání!`);
         }
-        this.zustatek -= castka;
-        this.historiePohybu.push("Výběr " + castka);
+        this.#zustatek -= castka;
+        this.#historiePohybu.push("Výběr " + castka);
     }
     historie() {
-        //return this.historiePohybu.join(", ");
-        let vypis = `${this.majitel} - historie pohybů:\n`;
-        for (let i = 0; i < this.historiePohybu.length; i++) {
-            vypis += this.historiePohybu[i] + "\n";
+        //return this.#historiePohybu.join(", ");
+        let vypis = `${this.#majitel} (${this.#cisloUctu}) - historie pohybů:\n`;
+        for (let i = 0; i < this.#historiePohybu.length; i++) {
+            vypis += this.#historiePohybu[i] + "\n";
         }
-        return `${vypis}zůstatek: ${this.zustatek}`;
+        return `${vypis}zůstatek: ${this.#zustatek}`;
     }
 };
 
 // Vytvoření účtů
-var ucet1 = new BankovniUcet("Jan Vopěnka", 10001, 100);
-var ucet2 = new BankovniUcet("Martina Vopěnková", 10002, 100);
+var ucet1 = new BankovniUcet("Jan Vopěnka", 100);
+var ucet2 = new BankovniUcet("Martina Vopěnková", 100);
 
 // Operace s účty
 try {
